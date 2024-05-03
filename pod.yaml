@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-server
+  namespace: homework
+  labels:
+    name: web-server
+spec:
+  initContainers:
+  - name: init-busybox
+    image: busybox:latest
+    command: ['sh', '-c', 'wget -O /init/index.html https://kubernetes.io/index.html']
+    volumeMounts:
+    - mountPath: /init
+      name: shared-volume
+  containers:
+  - name: nginx
+    image: nginx:alpine
+    volumeMounts:
+    - mountPath: /homework
+      name: shared-volume
+    - mountPath: /etc/nginx/conf.d/web-server.conf
+      name: nginx-conf
+    resources:
+      limits:
+        memory: "512Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 8000
+    lifecycle:
+      preStop:
+        exec:
+          command: ["sh", "-c", "rm -f /homework/index.html"]
+  volumes:
+  - name: nginx-conf
+    hostPath:
+      path: /mnt/host/c/Git/bokhanych_repo/web-server.conf
+      type: FileOrCreate
+  - name: shared-volume
+    emptyDir:
+      sizeLimit: 50Mi
+
+
+# Used commands:
+# minikube start
+# kubectl config set-context --current --namespace=homework
+# kubectl get po -A
+# kubectl apply -f pod.yaml
+# kubectl delete pod web-server -n homework
+# kubectl describe pod web-server -n homework
+# kubectl logs web-server -c init-busybox -n homework

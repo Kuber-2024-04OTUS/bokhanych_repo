@@ -34,18 +34,22 @@ spec:
   volumes:
   - name: nginx-conf
     hostPath:
-      path: /mnt/host/c/Git/bokhanych_repo/web-server.conf
+      path: /root/bokhanych_repo/web-server.conf
       type: FileOrCreate
   - name: shared-volume
     emptyDir:
       sizeLimit: 50Mi
 
 
+
+
 # Used commands:
+
 # minikube start
+# kubectl get namespaces
 # kubectl config set-context --current --namespace=homework
 # kubectl get po -A
 # kubectl apply -f pod.yaml
-# kubectl delete pod web-server -n homework
 # kubectl describe pod web-server -n homework
 # kubectl logs web-server -c init-busybox -n homework
+# kubectl delete pod web-server -n homework

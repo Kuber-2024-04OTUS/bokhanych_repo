@@ -66,6 +66,11 @@ spec:
 #   kubectl describe pod web-server -n homework
 #   kubectl logs web-server -c init-busybox -n homework
 
+# CHECK:
+#   minikube service web-server-service --url -n homework
+#   minikube ssh
+#   curl 192.168.49.2:32103
+
 # CLEAN:
 #   kubectl delete configmaps nginx-conf -n homework
 #   kubectl delete ingress web-server-ingress -n homework

@@ -49,6 +49,7 @@ spec:
 # kubectl get namespaces
 # kubectl config set-context --current --namespace=homework
 # kubectl get po -A
+# kubectl get svc
 # kubectl apply -f pod.yaml
 # kubectl describe pod web-server -n homework
 # kubectl logs web-server -c init-busybox -n homework

@@ -4,12 +4,12 @@ metadata:
   name: web-server
   namespace: homework
   labels:
-    name: web-server
+    name: kubectl logs web-server
 spec:
   initContainers:
   - name: init-busybox
     image: busybox:latest
-    command: ['sh', '-c', 'cd /init && wget -O /init/index.html --no-check-certificate https://example.com/index.html']
+    command: ['sh', '-c', 'cd /init && wget -O /init/index.html --no-check-certificate https://ya.ru/index.html']
     volumeMounts:
     - mountPath: /init
       name: shared-volume
@@ -43,24 +43,32 @@ spec:
 
 
 
-# Used commands:
+# START:
+#   minikube start --force
+#   kubectl apply -f namespaces.yaml
+#   kubectl apply -f configmaps.yaml
+#   kubectl apply -f pods.yaml
+#   kubectl apply -f services.yaml
 
-# minikube start --force
-# kubectl get namespaces
-# kubectl config set-context --current --namespace=homework
-# kubectl get po -A
-# kubectl get svc
-# kubectl apply -f pod.yaml
-# kubectl describe pod web-server -n homework
-# kubectl logs web-server -c init-busybox -n homework
+# NAMESPACES:
+#   kubectl get namespaces
+#   kubectl config set-context --current --namespace=homework
+
+# GET INFO:
+#   kubectl get po -A
+#   kubectl get svc
 
 # GIT:
-# git checkout -- .
-# git pull
+#   git checkout -- .
+#   git pull
+
+# DEBUG:
+#   kubectl describe pod web-server -n homework
+#   kubectl logs web-server -c init-busybox -n homework
 
 # CLEAN:
-# kubectl delete configmaps nginx-conf -n homework
-# kubectl delete ingress web-server-ingress -n homework
-# kubectl delete pod web-server -n homework
-# kubectl delete services web-server-service -n homework
-# kubectl delete namespaces homework
+#   kubectl delete configmaps nginx-conf -n homework
+#   kubectl delete ingress web-server-ingress -n homework
+#   kubectl delete pod web-server -n homework
+#   kubectl delete services web-server-service -n homework
+#   kubectl delete namespaces homework

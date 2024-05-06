@@ -4,7 +4,7 @@ metadata:
   name: web-server
   namespace: homework
   labels:
-    name: kubectl logs web-server
+    name: web-server
 spec:
   initContainers:
   - name: init-busybox

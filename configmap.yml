@@ -1,3 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-conf
+data:
+  nginx.conf: |
 server {
     listen 8000;
     root /homework
@@ -6,4 +12,4 @@ server {
     location / {
         try_files $uri/ =404;
     }
-}
+}   

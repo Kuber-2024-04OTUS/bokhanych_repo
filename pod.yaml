@@ -17,10 +17,11 @@ spec:
   - name: nginx
     image: nginx:alpine
     volumeMounts:
-    - mountPath: /homework
-      name: shared-volume
-    - mountPath: /etc/nginx/conf.d/web-server.conf
-      name: nginx-conf
+    - name: shared-volume
+      mountPath: /homework
+    - name: nginx-conf
+      mountPath: /etc/nginx/conf.d/web-server.conf
+      subPath: nginx.conf
     resources:
       limits:
         memory: "512Mi"
@@ -33,9 +34,8 @@ spec:
           command: ["sh", "-c", "rm -f /homework/index.html"]
   volumes:
   - name: nginx-conf
-    hostPath:
-      path: /root/bokhanych_repo/web-server.conf
-      type: FileOrCreate
+    configMap:
+      name: nginx-conf
   - name: shared-volume
     emptyDir:
       sizeLimit: 50Mi
@@ -45,7 +45,7 @@ spec:
 
 # Used commands:
 
-# minikube start
+# minikube start --force
 # kubectl get namespaces
 # kubectl config set-context --current --namespace=homework
 # kubectl get po -A

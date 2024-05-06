@@ -9,8 +9,4 @@ data:
         listen 8000;
         root /homework;
         autoindex on;
-
-        location / {
-            try_files $uri/ =404;
-        }
     }

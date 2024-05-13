@@ -37,8 +37,8 @@ spec:
           subPath: nginx.conf
         resources:
           limits:
-            cpu: "1"
-            memory: "1Gi"
+            cpu: "333m"
+            memory: "200Mi"
         ports:
           - containerPort: 8000
         lifecycle:

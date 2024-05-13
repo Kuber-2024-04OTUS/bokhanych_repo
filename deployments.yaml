@@ -63,5 +63,11 @@ spec:
         homework: "true"
 
 # NODE LABELS:
-# kubectl get nodes --show-labels
-# kubectl label nodes minikube homework=true
+#   kubectl get nodes --show-labels
+#   kubectl label nodes minikube homework=true
+
+# START:
+#   kubectl apply -f namespaces.yaml
+#   kubectl apply -f configmaps.yaml
+#   kubectl apply -f deployments.yaml
+#   kubectl apply -f services.yaml  

@@ -5,7 +5,7 @@ metadata:
   namespace: homework
 spec:
   selector:
-    name: web-server
+    name: web-server-deployment
   ports:
     - protocol: TCP
       port: 80

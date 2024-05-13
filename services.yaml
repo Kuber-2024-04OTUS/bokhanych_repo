@@ -5,7 +5,7 @@ metadata:
   namespace: homework
 spec:
   selector:
-    name: web-server-deployment
+    app: nginx
   ports:
     - protocol: TCP
       port: 80

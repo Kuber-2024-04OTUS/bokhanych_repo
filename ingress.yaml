@@ -30,8 +30,8 @@ spec:
   - host: homework.otus
     http:
       paths:
-      - path: /index.html(/|$)(.*)
-        pathType: Prefix
+      - path: /index.html
+        pathType: ImplementationSpecific
         backend:
           service:
             name: web-server-service

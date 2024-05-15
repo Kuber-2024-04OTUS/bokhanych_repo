@@ -1,7 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: example-ingress
+  name: main-ingress
+  namespace: homework
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$1
 spec:
@@ -16,3 +17,28 @@ spec:
                 name: web-server-service
                 port:
                   number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: rewrite-ingress
+  namespace: homework
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /homepage
+spec:
+  rules:
+  - host: homework.otus
+    http:
+      paths:
+      - path: /index.html(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: web-server-service
+            port: 
+              number: 80
+
+
+# echo "
+# <PASTE YOUR CODE THERE>
+# " | kubectl apply -f -

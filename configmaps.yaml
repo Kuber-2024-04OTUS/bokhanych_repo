@@ -14,8 +14,4 @@ data:
         location /homepage {
             alias /homework;
         }
-
-        location = /index.html {
-            return 301 $scheme://$host/homepage;
-        }
     }

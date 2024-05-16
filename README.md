@@ -20,18 +20,22 @@ root@k8s-minikube:/opt/bokhanych_repo# kubectl apply -f ingress.yaml
 ingress.networking.k8s.io/main-ingress created
 ingress.networking.k8s.io/rewrite-ingress created
 ```
+
+kubectl apply -f namespaces.yaml && kubectl apply -f configmaps.yaml && kubectl apply -f deployments.yaml && kubectl apply -f services.yaml && kubectl apply -f ingress.yaml
+
 **ПРОВЕРКА ПРИЛОЖЕНИЯ**
 ```
+root@k8s-minikube:/opt/bokhanych_repo# curl homework.otus/homepage
+Testpage ;)
 root@k8s-minikube:/opt/bokhanych_repo# curl homework.otus
 Testpage ;)
 root@k8s-minikube:/opt/bokhanych_repo# curl homework.otus/index.html
 <html>
-<head><title>404 Not Found</title></head>
+<head><title>301 Moved Permanently</title></head>
 <body>
-<center><h1>404 Not Found</h1></center>
+<center><h1>301 Moved Permanently</h1></center>
 <hr><center>nginx/1.19.0</center>
 </body>
 </html>
-root@k8s-minikube:/opt/bokhanych_repo# curl homework.otus/homepage
-Testpage ;)
+
 ```

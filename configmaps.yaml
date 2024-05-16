@@ -7,11 +7,10 @@ data:
   nginx.conf: |
     server {
         listen 8000;
-        #server_name homework.otus;
         root /homework;
         autoindex on;
 
         location /homepage {
-            alias /homework;
+            root /homework;
         }
     }

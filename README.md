@@ -8,15 +8,25 @@ service/web-server-service created
 ingress.networking.k8s.io/main-ingress created
 ```
 
-kubectl apply -f namespaces.yaml && kubectl apply -f configmaps.yaml && kubectl apply -f deployments.yaml && kubectl apply -f services.yaml && kubectl apply -f ingress.yaml
-
 **ПРОВЕРКА ПРИЛОЖЕНИЯ**
 ```
 # curl homework.otus/homepage
-Testpage ;)
+<html>
+<head><title>404 Not Found</title></head>
+<body>
+<center><h1>404 Not Found</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
 # curl homework.otus
-Testpage ;)
-# curl homework.otus/index.html
+<html>
+<head><title>404 Not Found</title></head>
+<body>
+<center><h1>404 Not Found</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+# curl homework.otus/index.html       -> http://homework.otus/index.html редиректит на http://homework.otus/homepage
 <html>
 <head><title>301 Moved Permanently</title></head>
 <body>
@@ -24,6 +34,7 @@ Testpage ;)
 <hr><center>nginx/1.19.0</center>
 </body>
 </html>
+
 ```
 
 

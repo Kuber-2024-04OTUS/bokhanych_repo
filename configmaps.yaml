@@ -11,6 +11,6 @@ data:
         autoindex on;
 
         location /homepage {
-            root /homework;
+            alias /homework;
         }
     }

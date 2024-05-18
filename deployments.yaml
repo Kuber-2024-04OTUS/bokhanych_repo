@@ -58,6 +58,7 @@ spec:
         configMap:
           name: nginx-conf
       - name: shared-volume
-        emptyDir: {}
+        PersistentVolumeClaim:
+          claimName: bokhanych-pvc
       nodeSelector:
         homework: "true" 

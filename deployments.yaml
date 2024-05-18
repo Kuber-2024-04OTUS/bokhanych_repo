@@ -62,7 +62,7 @@ spec:
         configMap:
           name: bokhanych-configmap
       - name: shared-volume
-        PersistentVolumeClaim:
-          claimName: bokhanych-pvc
+        persistentVolumeClaim:
+            claimName: bokhanych-pvc
       nodeSelector:
         homework: "true" 

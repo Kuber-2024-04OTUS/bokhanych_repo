@@ -6,3 +6,5 @@ metadata:
 data:
   ping: "pong"
   biba: "boba"
+  index.html: |
+    Welcome to bokhanych-configmap!

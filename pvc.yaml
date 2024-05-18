@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: bokhanych-pvc
   namespace: homework
-spec:
+spec: 
   accessModes:
     - ReadWriteOnce
   resources:

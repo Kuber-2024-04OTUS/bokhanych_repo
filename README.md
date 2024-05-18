@@ -1,6 +1,6 @@
 **ЗАПУСК И ПРОВЕРКА ДЕПЛОЙМЕНТА**
 ```
-# kubectl apply -f namespaces.yaml && kubectl apply -f configmaps.yaml && kubectl apply -f deployments.yaml && kubectl apply -f services.yaml && kubectl apply -f ingress.yaml
+# kubectl apply -f namespaces.yaml && kubectl apply -f configmaps.yaml && kubectl apply -f deployments.yaml && kubectl apply -f services.yaml && kubectl apply -f ingress.yaml && kubectl apply -f cm.yaml && kubectl apply -f pvc.yaml
 namespace/homework created
 configmap/nginx-conf created
 deployment.apps/web-server-deployment created

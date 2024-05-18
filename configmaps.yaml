@@ -9,4 +9,8 @@ data:
         listen 8000;
         root /homework;
         autoindex on;
+
+        location /homepage {
+            alias /homework;
+        }
     }

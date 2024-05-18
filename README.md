@@ -1,11 +1,13 @@
 **ЗАПУСК И ПРОВЕРКА ДЕПЛОЙМЕНТА**
 ```
-# kubectl apply -f namespaces.yaml && kubectl apply -f configmaps.yaml && kubectl apply -f cm.yaml && kubectl apply -f pvc.yaml && kubectl apply -f deployments.yaml && kubectl apply -f services.yaml && kubectl apply -f ingress.yaml 
-namespace/homework created
-configmap/nginx-conf created
-deployment.apps/web-server-deployment created
-service/web-server-service created
-ingress.networking.k8s.io/main-ingress created
+kubectl apply -f 1_namespace.yaml //
+&& kubectl apply -f 2_cm.yaml //
+&& kubectl apply -f 3_storageclass.yaml //
+&& kubectl apply -f 4_pvc.yaml //
+&& kubectl apply -f 5_deployment.yaml //
+&& kubectl apply -f 6_service.yaml //
+&& kubectl apply -f 7_ingress.yaml 
+
 ```
 
 **ПРОВЕРКА ПРИЛОЖЕНИЯ**

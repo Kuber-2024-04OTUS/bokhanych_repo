@@ -4,6 +4,7 @@ metadata:
   name: bokhanych-pvc
   namespace: homework
 spec: 
+  storageClassName: "bokhanych-storageclass"
   accessModes:
     - ReadWriteOnce
   resources:

@@ -19,6 +19,7 @@ spec:
       labels:
         app: nginx
     spec:
+      serviceAccountName: monitoring-service-account
       initContainers:
       - name: init-busybox
         image: busybox:latest

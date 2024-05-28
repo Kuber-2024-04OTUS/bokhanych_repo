@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: web-server-deployment
-  namespace: homework
+  name: {{ .Release.Name }}-deployment
+  namespace: {{ .Values.general.namespace }}
   labels: 
     app: nginx
 spec:
-  replicas: 3
+  replicas: {{ .Values.resources.replicaCount }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -19,7 +19,7 @@ spec:
       labels:
         app: nginx
     spec:
-      serviceAccountName: monitoring-service-account
+      #serviceAccountName: monitoring-service-account
       initContainers:
       - name: init-busybox
         image: busybox:latest
@@ -28,8 +28,8 @@ spec:
         - mountPath: /init
           name: shared-volume
       containers:
-      - name: nginx
-        image: nginx:1.19.0
+      - name: {{ .Values.web_server.image }}
+        image: {{ .Values.web_server.image }}:{{ .Values.web_server.tag }}
         volumeMounts:
         - name: shared-volume
           mountPath: /homework
@@ -39,31 +39,34 @@ spec:
           mountPath: /etc/nginx/conf.d/
         resources:
           limits:
-            cpu: "333m"
-            memory: "200Mi"
+            cpu: {{ .Values.resources.cpu_limits }}
+            memory: {{ .Values.resources.memory_limits }}
         ports:
           - containerPort: 8000
         lifecycle:
           preStop:
             exec:
               command: ["sh", "-c", "rm -f /homework/index.html"]
+        {{- if .Values.probes.readiness }}
         readinessProbe:
           exec:
             command:
-            - sh
-            - -c
-            - test -f /homework/index.html
+              - sh
+              - -c
+              - test -f /homework/index.html
           initialDelaySeconds: 5
           periodSeconds: 5
+        {{- end }}
       volumes:
       - name: nginx-conf
         configMap:
-          name: nginx-conf
+          name: {{ .Values.storages.configmap_name1 }}
       - name: new-configmap
         configMap:
-          name: bokhanych-configmap
+          name:  {{ .Values.storages.configmap_name2 }}
       - name: shared-volume
         persistentVolumeClaim:
-            claimName: bokhanych-pvc
+            claimName: {{ .Release.Name }}-pvc
       nodeSelector:
         homework: "true" 
+        

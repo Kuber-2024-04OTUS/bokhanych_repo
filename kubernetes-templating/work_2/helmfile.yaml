@@ -1,0 +1,45 @@
+# environments:
+#   - name: dev
+#     values: values_dev.yaml
+#   - name: prod
+#     values: values_prod.yaml
+# ---
+releases:
+  - name: kafka-prod
+    chart: bitnami/kafka
+    values: values_prod.yaml
+    namespace: prod
+  - name: kafka-dev
+    chart: bitnami/kafka
+    values: values_dev.yaml
+    namespace: dev
+
+
+repositories:
+ - name: prometheus-community
+   url: https://prometheus-community.github.io/helm-charts
+
+releases:
+- name: prom-norbac-ubuntu
+  namespace: prometheus
+  chart: prometheus-community/prometheus
+  set:
+  - name: rbac.create
+    value: false
+
+
+
+
+releases:
+    - name: adminer
+      chart: ./charts/app
+      values:
+          - ./values/adminer.yaml
+    - name: kanban-app
+      chart: ./charts/app
+      values:
+          - ./values/kanban-app.yaml
+    - name: kanban-ui
+      chart: ./charts/app
+      values:
+          - ./values/kanban-ui.yaml

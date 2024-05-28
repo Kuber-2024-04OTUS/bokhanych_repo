@@ -1,0 +1,15 @@
+# helm install cluster-kafka bitnami/kafka -f values1.yaml --namespace=prod
+
+image:
+  registry: docker.io
+  repository: bitnami/kafka
+  tag: 3.5.2-debian-11-r3
+
+broker:
+  replicaCount: 5
+
+listeners:
+  client:
+    protocol: SASL_PLAINTEXT
+  interbroker:
+    protocol: SASL_PLAINTEXT

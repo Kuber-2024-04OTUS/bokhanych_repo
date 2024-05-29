@@ -1,45 +1,38 @@
-# environments:
-#   - name: dev
-#     values: values_dev.yaml
-#   - name: prod
-#     values: values_prod.yaml
-# ---
-releases:
-  - name: kafka-prod
-    chart: bitnami/kafka
-    values: values_prod.yaml
-    namespace: prod
-  - name: kafka-dev
-    chart: bitnami/kafka
-    values: values_dev.yaml
-    namespace: dev
-
-
 repositories:
- - name: prometheus-community
-   url: https://prometheus-community.github.io/helm-charts
+ - name: kafka
+   url: https://charts.bitnami.com/bitnami
 
 releases:
-- name: prom-norbac-ubuntu
-  namespace: prometheus
-  chart: prometheus-community/prometheus
+- name: kafka-dev
+  namespace: dev
+  chart: bitnami/kafka
   set:
-  - name: rbac.create
-    value: false
+  - name: image.registry
+    value: docker.io
+  - name: image.repository
+    value: bitnami/kafka
+  - name: image.tag
+    value: latest
+  - name: broker.replicaCount
+    value: 1
+  - name: listeners.client.protocol
+    value: PLAINTEXT
+  - name: listeners.interbroker.protocol
+    value: PLAINTEXT
 
-
-
-
-releases:
-    - name: adminer
-      chart: ./charts/app
-      values:
-          - ./values/adminer.yaml
-    - name: kanban-app
-      chart: ./charts/app
-      values:
-          - ./values/kanban-app.yaml
-    - name: kanban-ui
-      chart: ./charts/app
-      values:
-          - ./values/kanban-ui.yaml
+- name: kafka-prod
+  namespace: prod
+  chart: bitnami/kafka
+  set:
+  - name: image.registry
+    value: docker.io
+  - name: image.repository
+    value: bitnami/kafka
+  - name: image.tag
+    value: 3.5.2-debian-12-r17
+  - name: broker.replicaCount
+    value: 5
+  - name: listeners.client.protocol
+    value: SASL_PLAINTEXT
+  - name: listeners.interbroker.protocol
+    value: SASL_PLAINTEXT

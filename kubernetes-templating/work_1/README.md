@@ -3,7 +3,6 @@ helm dependency build
 helm install app ./work_1
 
 ```
-# helm install app ./work_1/
 NAME: app
 LAST DEPLOYED: Tue May 28 15:12:47 2024
 NAMESPACE: default

@@ -1,0 +1,10 @@
+apiVersion: otus.homework/v1
+kind: MySQL
+metadata:
+  name: my-mysql
+  namespace: homework
+spec:
+  image: mysql:latest
+  database: mydb
+  password: mysecretpassword
+  storage_size: 1Gi

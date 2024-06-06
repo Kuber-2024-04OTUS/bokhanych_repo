@@ -1,0 +1,38 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: prometheus-ingress
+  namespace: prometheus
+  annotations: 
+spec:
+  rules:
+    - host: monitoring.homework
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: prometheus-kube-prometheus-prometheus
+                port:
+                  number: 9090
+
+    - host: homework.otus
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: web-server-service
+                port:
+                  number: 80
+
+# project links: 
+# http://monitoring.homework
+# http://homework.otus
+# http://homework.otus/basic_status
+
+# for /etc/hosts:
+# 157.90.28.247 monitoring.homework
+# 157.90.28.247 homework.otus

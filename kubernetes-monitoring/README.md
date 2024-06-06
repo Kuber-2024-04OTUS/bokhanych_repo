@@ -67,5 +67,4 @@ $ curl monitoring.homework
 
 ![lens-monitoring](lens-monitoring.png)
 
-
-![prometheus-monitoring](image.png)
+![node-exp](image-1.png)

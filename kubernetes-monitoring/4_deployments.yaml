@@ -19,6 +19,7 @@ spec:
       labels:
         app: nginx
     spec:
+      serviceAccountName: monitoring-service-account
       initContainers:
       - name: init-busybox
         image: busybox:latest
@@ -82,6 +83,7 @@ spec:
       labels:
         app: nginx-pe
     spec:
+      serviceAccountName: monitoring-service-account
       containers:
       - name: nginx-prometheus-exporter
         image: nginx/nginx-prometheus-exporter:1.1.0

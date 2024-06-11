@@ -15,14 +15,16 @@
 
 
 Project links: 
+```
     http://monitoring.homework
     http://homework.otus
     http://homework.otus/basic_status
-
+```
 For /etc/hosts:
+```
     157.90.28.247 monitoring.homework
     157.90.28.247 homework.otus
-
+```
 
 ```
 root@k8s-minikube:/opt/bokhanych_repo/kubernetes-monitoring# kubectl apply -f 1_namespaces.yaml 

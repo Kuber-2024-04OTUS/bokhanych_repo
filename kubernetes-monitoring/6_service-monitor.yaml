@@ -3,6 +3,8 @@ kind: ServiceMonitor
 metadata:
   name: nginx-prometheus-exporter-monitor
   namespace: prometheus
+  labels: 
+    app: nginx-pe
 spec:
   selector:
     matchLabels:

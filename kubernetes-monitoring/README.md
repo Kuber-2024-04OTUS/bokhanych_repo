@@ -52,7 +52,7 @@ kube-prometheus
 https://artifacthub.io/packages/helm/bitnami/kube-prometheus?modal=install
 
 ```
-root@k8s-minikube:/opt/bokhanych_repo/kubernetes-monitoring# helm install my-kube-prometheus bitnami/kube-prometheus -n prometheus --debug
+root@k8s-minikube:/opt/bokhanych_repo/kubernetes-monitoring# helm install my-kube-prometheus bitnami/kube-prometheus -n prometheus 
 NAME: my-kube-prometheus
 LAST DEPLOYED: Tue Jun 11 10:08:51 2024
 NAMESPACE: prometheus
@@ -104,18 +104,16 @@ WARNING: There are "resources" sections in the chart not set. Using "resourcesPr
   - prometheus.thanos.resources
 +info https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
 
+root@k8s-minikube:/tmp# curl homework.otus/basic_status
+Active connections: 1
+server accepts handled requests
+ 2 2 2
+Reading: 0 Writing: 1 Waiting: 0
 
-root@k8s-minikube:/opt/bokhanych_repo/kubernetes-monitoring# kubectl get svc -n prometheus 
-NAME                                        TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
-alertmanager-operated                       ClusterIP   None             <none>        9093/TCP,9094/TCP,9094/UDP   2m27s
-my-kube-prometheus-alertmanager             ClusterIP   10.105.190.200   <none>        9093/TCP                     2m27s
-my-kube-prometheus-blackbox-exporter        ClusterIP   10.106.102.143   <none>        19115/TCP                    2m27s
-my-kube-prometheus-kube-state-metrics       ClusterIP   10.100.70.224    <none>        8080/TCP                     2m27s
-my-kube-prometheus-node-exporter            ClusterIP   10.110.108.180   <none>        9100/TCP                     2m27s
-my-kube-prometheus-operator                 ClusterIP   10.104.118.181   <none>        8080/TCP                     2m27s
-my-kube-prometheus-prometheus               ClusterIP   10.109.55.245    <none>        9090/TCP                     2m27s
-nginx-prometheus-exporter-monitor-service   ClusterIP   10.105.115.118   <none>        80/TCP                       6m37s
-prometheus-operated                         ClusterIP   None             <none>        9090/TCP                     2m27s
-web-server-service                          ClusterIP   10.104.44.244    <none>        80/TCP                       6m37s
+root@k8s-minikube:/tmp# curl homework.otus
+Testpage ;)
+
+root@k8s-minikube:/tmp# curl monitoring.homework
+<a href="/graph">Found</a>.
 
 ```

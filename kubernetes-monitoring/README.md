@@ -1,70 +1,121 @@
-**Необходимо создать кастомный образ и nginx, отдающий свои метрики на определенном endpoint ( пример из офф документаøии в разделе ссылок)**
-**Создать deployment запускающий ваш кастомный nginx образ и service для него**
+4. Пошаговая инструкция выполнения домашнего задания
+
+● Необходимо создать кастомный образ nginx, отдающий свои метрики на определенном endpoint 
+(пример из офф документации в разделе ссылок)
+
+● Установить в кластер Prometheus-operator любым удобным вам способом 
+(рекомендуется ставить или по ссылке из офф документации, либо через helm-чарт)
+
+● Создать deployment запускающий ваш кастомный nginx образ и service для него
+
+● Настроить запуск nginx prometheus exporter 
+(отдельным подом или в составе пода с nginx – не принципиально) и сконфигурировать его для сбора метрик с nginx
+
+● Создать манифест serviceMonitor, описывающий сбор метрик с подов, которые вы создали
+
+
+Project links: 
+    http://monitoring.homework
+    http://homework.otus
+    http://homework.otus/basic_status
+
+For /etc/hosts:
+    157.90.28.247 monitoring.homework
+    157.90.28.247 homework.otus
+
+
 ```
- # kubectl apply -f 1_namespaces.yaml 
-namespace/homework created
-
- # kubectl apply -f 2_nginx-configmap.yaml 
+root@k8s-minikube:/opt/bokhanych_repo/kubernetes-monitoring# kubectl apply -f 1_namespaces.yaml 
+namespace/prometheus created
+root@k8s-minikube:/opt/bokhanych_repo/kubernetes-monitoring# kubectl apply -f 2_nginx-configmap.yaml 
 configmap/nginx-conf created
-
- # kubectl apply -f 3_deployments.yaml 
+root@k8s-minikube:/opt/bokhanych_repo/kubernetes-monitoring# kubectl apply -f 3_deployments.yaml 
 deployment.apps/web-server-deployment created
-
- # kubectl apply -f 4_services.yaml 
+deployment.apps/nginx-prometheus-exporter-deployment created
+root@k8s-minikube:/opt/bokhanych_repo/kubernetes-monitoring# kubectl apply -f 4_services.yaml 
 service/web-server-service created
-
- # kubectl apply -f 5_ingress.yaml 
-ingress.networking.k8s.io/main-ingress created
-
- # curl homework.otus
+service/nginx-prometheus-exporter-monitor-service created
+root@k8s-minikube:/opt/bokhanych_repo/kubernetes-monitoring# kubectl apply -f 5_ingress.yaml 
+ingress.networking.k8s.io/prometheus-ingress created
+root@k8s-minikube:/opt/bokhanych_repo/kubernetes-monitoring# kubectl apply -f 6_service-monitor.yaml 
+servicemonitor.monitoring.coreos.com/nginx-prometheus-exporter-monitor created
+root@k8s-minikube:/opt/bokhanych_repo/kubernetes-monitoring# curl homework.otus
 Testpage ;)
-
- # curl homework.otus/basic_status
+root@k8s-minikube:/opt/bokhanych_repo/kubernetes-monitoring# curl homework.otus/basic_status
 Active connections: 1 
 server accepts handled requests
  1 1 1 
 Reading: 0 Writing: 1 Waiting: 0 
 ```
-**Установить в кластер Prometheus-operator**
-```
-# helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-    "prometheus-community" has been added to your repositories
 
-# helm repo update
-    Update Complete. ⎈Happy Helming!⎈
-
-# helm install prometheus -n prometheus prometheus-community/kube-prometheus-stack
-    NAME: prometheus
-    LAST DEPLOYED: Thu Jun  6 08:49:47 2024
-    NAMESPACE: prometheus
-    STATUS: deployed
-    REVISION: 1
-    NOTES:
-    kube-prometheus-stack has been installed. Check its status by running:
-    kubectl --namespace prometheus get pods -l "release=prometheus"
-
-# kubectl --namespace prometheus get pods -l "release=prometheus"
-    NAME                                                   READY   STATUS    RESTARTS   AGE
-    prometheus-kube-prometheus-operator-774c4cd64d-xpdms   1/1     Running   0          8m12s
-    prometheus-kube-state-metrics-7d7654ff7-4pg7f          1/1     Running   0          8m12s
-    prometheus-prometheus-node-exporter-9492f              1/1     Running   0          8m13s
-
-$ curl monitoring.homework
-<a href="/graph">Found</a>.
-
+kube-prometheus
+https://artifacthub.io/packages/helm/bitnami/kube-prometheus?modal=install
 
 ```
-**Настроить запуск nginx prometheus exporter (отдельным подом или в составе пода с nginx – не принципиально) и сконфигурировать его для сбора метрик с nginx**
+root@k8s-minikube:/opt/bokhanych_repo/kubernetes-monitoring# helm install my-kube-prometheus bitnami/kube-prometheus -n prometheus --debug
+NAME: my-kube-prometheus
+LAST DEPLOYED: Tue Jun 11 10:08:51 2024
+NAMESPACE: prometheus
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+CHART NAME: kube-prometheus
+CHART VERSION: 9.5.0
+APP VERSION: 0.74.0
+
+** Please be patient while the chart is being deployed **
+
+Watch the Prometheus Operator Deployment status using the command:
+
+    kubectl get deploy -w --namespace prometheus -l app.kubernetes.io/name=kube-prometheus-operator,app.kubernetes.io/instance=my-kube-prometheus
+
+Watch the Prometheus StatefulSet status using the command:
+
+    kubectl get sts -w --namespace prometheus -l app.kubernetes.io/name=kube-prometheus-prometheus,app.kubernetes.io/instance=my-kube-prometheus
+
+Prometheus can be accessed via port "9090" on the following DNS name from within your cluster:
+
+    my-kube-prometheus-prometheus.prometheus.svc.cluster.local
+
+To access Prometheus from outside the cluster execute the following commands:
+
+    echo "Prometheus URL: http://127.0.0.1:9090/"
+    kubectl port-forward --namespace prometheus svc/my-kube-prometheus-prometheus 9090:9090
+
+Watch the Alertmanager StatefulSet status using the command:
+
+    kubectl get sts -w --namespace prometheus -l app.kubernetes.io/name=kube-prometheus-alertmanager,app.kubernetes.io/instance=my-kube-prometheus
+
+Alertmanager can be accessed via port "9093" on the following DNS name from within your cluster:
+
+    my-kube-prometheus-alertmanager.prometheus.svc.cluster.local
+
+To access Alertmanager from outside the cluster execute the following commands:
+
+    echo "Alertmanager URL: http://127.0.0.1:9093/"
+    kubectl port-forward --namespace prometheus svc/my-kube-prometheus-alertmanager 9093:9093
+
+WARNING: There are "resources" sections in the chart not set. Using "resourcesPreset" is not recommended for production. For production installations, please set the following values according to your workload needs:
+  - alertmanager.resources
+  - blackboxExporter.resources
+  - operator.resources
+  - prometheus.resources
+  - prometheus.thanos.resources
++info https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
 
 
-**Создать манифест serviceMonitor, описывающий сбор метрик с подов, которые вы создали**
-см nginx-prometheus-exporter-deployment
+root@k8s-minikube:/opt/bokhanych_repo/kubernetes-monitoring# kubectl get svc -n prometheus 
+NAME                                        TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
+alertmanager-operated                       ClusterIP   None             <none>        9093/TCP,9094/TCP,9094/UDP   2m27s
+my-kube-prometheus-alertmanager             ClusterIP   10.105.190.200   <none>        9093/TCP                     2m27s
+my-kube-prometheus-blackbox-exporter        ClusterIP   10.106.102.143   <none>        19115/TCP                    2m27s
+my-kube-prometheus-kube-state-metrics       ClusterIP   10.100.70.224    <none>        8080/TCP                     2m27s
+my-kube-prometheus-node-exporter            ClusterIP   10.110.108.180   <none>        9100/TCP                     2m27s
+my-kube-prometheus-operator                 ClusterIP   10.104.118.181   <none>        8080/TCP                     2m27s
+my-kube-prometheus-prometheus               ClusterIP   10.109.55.245    <none>        9090/TCP                     2m27s
+nginx-prometheus-exporter-monitor-service   ClusterIP   10.105.115.118   <none>        80/TCP                       6m37s
+prometheus-operated                         ClusterIP   None             <none>        9090/TCP                     2m27s
+web-server-service                          ClusterIP   10.104.44.244    <none>        80/TCP                       6m37s
 
 ```
-# kubectl apply -f 6_service-monitor.yaml 
-    servicemonitor.monitoring.coreos.com/nginx-prometheus-exporter-monitor created
-```
-
-![lens-monitoring](lens-monitoring.png)
-
-![node-exp](image-1.png)

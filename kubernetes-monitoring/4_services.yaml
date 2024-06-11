@@ -3,6 +3,8 @@ kind: Service
 metadata:
   name: web-server-service
   namespace: prometheus
+  annotations:
+    prometheus.io/scrape: 'true'
 spec:
   selector:
     app: nginx
@@ -17,6 +19,8 @@ kind: Service
 metadata:
   name: nginx-prometheus-exporter-monitor-service
   namespace: prometheus
+  annotations:
+    prometheus.io/scrape: 'true'
 spec:
   selector:
     app: nginx-pe

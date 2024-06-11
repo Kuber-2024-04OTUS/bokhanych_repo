@@ -19,7 +19,6 @@ spec:
       labels:
         app: nginx
     spec:
-      serviceAccountName: monitoring-service-account
       initContainers:
       - name: init-busybox
         image: busybox:latest
@@ -37,7 +36,7 @@ spec:
           mountPath: /etc/nginx/conf.d/
         resources:
           limits:
-            cpu: "333m"
+            cpu: "100m"
             memory: "200Mi"
         ports:
           - containerPort: 8000
@@ -89,3 +88,6 @@ spec:
         image: nginx/nginx-prometheus-exporter:1.1.0
         args:
         - "--nginx.scrape-uri=http://homework.otus/basic_status"
+        ports:
+        - name: metrics
+          containerPort: 9113

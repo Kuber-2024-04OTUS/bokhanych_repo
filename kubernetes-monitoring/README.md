@@ -74,3 +74,6 @@ CHART NAME: kube-prometheus
 CHART VERSION: 9.5.0
 APP VERSION: 0.74.0
 ```
+
+
+![exporter-monitor](image.png)

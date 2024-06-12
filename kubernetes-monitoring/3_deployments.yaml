@@ -68,6 +68,9 @@ metadata:
   namespace: prometheus
   labels: 
     app: nginx-pe
+  annotations:
+    prometheus.io/scrape: 'true'
+    prometheus.io/port: '9113'
 spec:
   replicas: 1
   strategy:

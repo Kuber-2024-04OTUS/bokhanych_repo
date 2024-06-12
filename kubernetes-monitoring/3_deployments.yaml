@@ -2,11 +2,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: web-server-deployment
-  namespace: homework
+  namespace: prometheus
   labels: 
     app: nginx
 spec:
-  replicas: 3
+  replicas: 2
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -32,13 +32,11 @@ spec:
         volumeMounts:
         - name: shared-volume
           mountPath: /homework
-        - name: new-configmap
-          mountPath: /homework/conf
         - name: nginx-conf
           mountPath: /etc/nginx/conf.d/
         resources:
           limits:
-            cpu: "333m"
+            cpu: "100m"
             memory: "200Mi"
         ports:
           - containerPort: 8000
@@ -58,11 +56,40 @@ spec:
       - name: nginx-conf
         configMap:
           name: nginx-conf
-      - name: new-configmap
-        configMap:
-          name: bokhanych-configmap
       - name: shared-volume
-        persistentVolumeClaim:
-            claimName: bokhanych-pvc
+        emptyDir: {}
       nodeSelector:
         homework: "true" 
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-prometheus-exporter-deployment
+  namespace: prometheus
+  labels: 
+    app: nginx-pe
+  annotations:
+    prometheus.io/scrape: 'true'
+    prometheus.io/port: '9113'
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: nginx-pe
+  template:
+    metadata:
+      labels:
+        app: nginx-pe
+    spec:
+      containers:
+      - name: nginx-prometheus-exporter
+        image: nginx/nginx-prometheus-exporter:1.1.0
+        args:
+        - "--nginx.scrape-uri=http://homework.otus/basic_status"
+        ports:
+        - name: metrics
+          containerPort: 9113

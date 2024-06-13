@@ -1,0 +1,18 @@
+general:
+  namespace: homework
+
+web_server:
+  image: nginx
+  tag: 1.18.0
+
+resources:
+  replicaCount: 3
+  cpu_limits: "100m" 
+  memory_limits: "200Mi"
+
+storages:
+  configmap_name1: nginx-conf
+  configmap_name2: bokhanych-configmap
+
+probes:
+  readiness: true

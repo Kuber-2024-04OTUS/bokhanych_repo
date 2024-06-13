@@ -1,7 +1,8 @@
 apiVersion: otus.homework/v1
 kind: MySQL
 metadata:
-  name: mysql-custom-object-new
+  name: mysql-custom-object-new2
+  finalizers: []
 spec:
   image: mysql:5.7.43
   database: mydb

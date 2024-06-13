@@ -30,4 +30,6 @@ mysqls.otus.homework                        2024-06-13T12:13:58Z
 
 ```
 
+
+![lens-logs](image.png)
 ![check-in](image-1.png)

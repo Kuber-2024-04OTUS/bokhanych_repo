@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: user
+  namespace: homework
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: full-access-cluster-role
+rules:
+  - apiGroups: ["otus.homework"]
+    resources: ["mysqls"]
+    verbs: ["*"]
+  - apiGroups: [""]
+    resources: ["events", "persistentvolumes", "pods", "services", "endpoints", "persistentvolumeclaims", "configmaps", "secrets"]
+    verbs: ["*"]
+  - apiGroups: ["apps"]
+    resources: ["deployments", "deployments/status"]
+    verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: full-access-cluster-role-binding
+subjects:
+  - kind: ServiceAccount
+    name: user
+    namespace: homework
+roleRef:
+  kind: ClusterRole
+  name: full-access-cluster-role
+  apiGroup: rbac.authorization.k8s.io

@@ -1,0 +1,13 @@
+apiVersion: otus.homework/v1
+kind: MySQL
+metadata:
+  name: mysql-custom-object
+  namespace: homework
+spec:
+  image: mysql:5.7.0
+  database: mydb
+  password: mysecretpassword
+  storage_size: 1Gi
+
+
+# Delete: kubectl patch crd/mysqls.otus.homework -p '{"metadata":{"finalizers":[]}}' --type=merge

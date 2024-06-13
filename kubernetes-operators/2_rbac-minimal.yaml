@@ -12,11 +12,11 @@ rules:
     resources: ["mysqls"]
     verbs: ["create", "delete", "get", "list", "update", "watch", "patch"]
   - apiGroups: [""]
-    resources: ["services", "persistentvolumes", "persistentvolumeclaims", "deployments/status", "events"]
-    verbs: ["create", "delete", "watch", "get"]
+    resources: ["services", "persistentvolumes", "persistentvolumeclaims", "events"]
+    verbs: ["create", "delete", "watch"]
   - apiGroups: ["apps"]
-    resources: ["deployments"]
-    verbs: ["create", "delete"]
+    resources: ["deployments", "deployments/status"]
+    verbs: ["create", "delete", "get"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding

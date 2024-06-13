@@ -1,0 +1,101 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: mysqls.otus.homework
+spec:
+  group: otus.homework
+  versions:
+  - name: v1
+    served: true
+    storage: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              image:
+                type: string
+                description: 'Docker-image'
+              database:
+                type: string
+                description: 'DB name'
+              password:
+                type: string
+                description: 'DB pass'
+              storage_size:
+                type: string
+                default: "1"
+                description: 'DB pass'
+  scope: Namespaced
+  names:
+    plural: mysqls
+    singular: mysql
+    kind: MySQL
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: user
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: full-access-cluster-role
+rules:
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["*"]
+  - apiGroups: ["apps"]
+    resources: ["deployments", "deployments/status"]
+    verbs: ["*"]
+  - apiGroups: ["*"]
+    resources: ["mysqls", "deployments"]
+    verbs: ["*"]
+  - apiGroups: ["*"]
+    resources: ["services", "persistentvolumes", "persistentvolumeclaims"]
+    verbs: ["create", "delete", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: full-access-cluster-role-binding
+subjects:
+  - kind: ServiceAccount
+    name: user
+    namespace: default
+roleRef:
+  kind: ClusterRole
+  name: full-access-cluster-role
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-operator-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-operator
+  template:
+    metadata:
+      labels:
+        app: mysql-operator
+    spec:
+      serviceAccountName: user
+      containers:
+        - name: mysql-operator
+          image: roflmaoinmysoul/mysql-operator:1.0.0
+---
+apiVersion: otus.homework/v1
+kind: MySQL
+metadata:
+  name: mysql-custom-object-new
+spec:
+  image: mysql:5.7.43
+  database: mydb
+  password: mysecretpassword
+  storage_size: 1Gi
+  

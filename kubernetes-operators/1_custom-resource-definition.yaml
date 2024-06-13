@@ -26,6 +26,7 @@ spec:
                 description: 'DB pass'
               storage_size:
                 type: string
+                default: "1"
                 description: 'DB pass'
   scope: Namespaced
   names:

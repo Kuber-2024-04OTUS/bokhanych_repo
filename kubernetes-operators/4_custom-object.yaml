@@ -12,3 +12,4 @@ spec:
 
 
 # Delete: kubectl patch crd/mysqls.otus.homework -p '{"metadata":{"finalizers":[]}}' --type=merge
+# Delete: kubectl patch mysqls.otus.homework/mysql-custom-object-new -p '{"metadata":{"finalizers":[]}}' --type=merge

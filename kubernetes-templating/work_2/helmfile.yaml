@@ -1,0 +1,38 @@
+repositories:
+ - name: kafka
+   url: https://charts.bitnami.com/bitnami
+
+releases:
+- name: kafka-dev
+  namespace: dev
+  chart: bitnami/kafka
+  set:
+  - name: image.registry
+    value: docker.io
+  - name: image.repository
+    value: bitnami/kafka
+  - name: image.tag
+    value: latest
+  - name: broker.replicaCount
+    value: 1
+  - name: listeners.client.protocol
+    value: PLAINTEXT
+  - name: listeners.interbroker.protocol
+    value: PLAINTEXT
+
+- name: kafka-prod
+  namespace: prod
+  chart: bitnami/kafka
+  set:
+  - name: image.registry
+    value: docker.io
+  - name: image.repository
+    value: bitnami/kafka
+  - name: image.tag
+    value: 3.5.2-debian-12-r17
+  - name: broker.replicaCount
+    value: 5
+  - name: listeners.client.protocol
+    value: SASL_PLAINTEXT
+  - name: listeners.interbroker.protocol
+    value: SASL_PLAINTEXT

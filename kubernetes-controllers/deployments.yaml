@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-server-deployment
+  namespace: homework
+  labels: 
+    app: nginx
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      initContainers:
+      - name: init-busybox
+        image: busybox:latest
+        command: ['sh', '-c', 'echo "Testpage ;)" > /init/index.html']
+        volumeMounts:
+        - mountPath: /init
+          name: shared-volume
+      containers:
+      - name: nginx
+        image: nginx:1.19.0
+        volumeMounts:
+        - name: shared-volume
+          mountPath: /homework
+        - name: nginx-conf
+          mountPath: /etc/nginx/conf.d/default.conf
+          subPath: nginx.conf
+        resources:
+          limits:
+            cpu: "333m"
+            memory: "200Mi"
+        ports:
+          - containerPort: 8000
+        lifecycle:
+          preStop:
+            exec:
+              command: ["sh", "-c", "rm -f /homework/index.html"]
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - test -f /homework/index.html
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: nginx-conf
+        configMap:
+          name: nginx-conf
+      - name: shared-volume
+        emptyDir: {}
+      nodeSelector:
+        homework: "true" 

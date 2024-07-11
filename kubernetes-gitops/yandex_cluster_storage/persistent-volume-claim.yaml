@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: homeworkhelm
+  name: yandex-cluster-persistent-claim
+spec:
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: "yc-network-hdd"
+  volumeName: yandex-cluster-persistent-volume

@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name      : app-templating
+  namespace : argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: otus
+  source:
+    repoURL       : 'git@github.com:Kuber-2024-04OTUS/bokhanych_repo.git'
+    targetRevision: HEAD
+    path          : 'kubernetes-templating/work_1'
+    helm:
+      valueFiles:
+        - values.yaml
+      parameters:
+      - name: general.namespace
+        value: homeworkhelm
+      - name: resources.replicaCount
+        value: '1'
+      - name: persistentVolumeClaim.claimName
+        value: yandex-cluster-persistent-volume
+  destination:
+    #server   : https://kubernetes.default.svc
+    #name     : app-networks
+    name     : in-cluster
+    namespace: homeworkhelm
+  sources: []
+  syncPolicy:
+    automated:
+      prune   : true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      

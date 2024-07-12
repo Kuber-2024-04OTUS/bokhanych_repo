@@ -11,6 +11,8 @@ spec:
     repoURL       : 'git@github.com:Kuber-2024-04OTUS/bokhanych_repo.git'
     targetRevision: HEAD
     path          : 'kubernetes-templating/work_1'
+    directory:
+      exclude: '3_storages.yaml'
     helm:
       valueFiles:
         - values.yaml
@@ -19,11 +21,7 @@ spec:
         value: homeworkhelm
       - name: resources.replicaCount
         value: '1'
-      - name: persistentVolumeClaim.claimName
-        value: yandex-cluster-persistent-volume
   destination:
-    #server   : https://kubernetes.default.svc
-    #name     : app-networks
     name     : in-cluster
     namespace: homeworkhelm
   sources: []

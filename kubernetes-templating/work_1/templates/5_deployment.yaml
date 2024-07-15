@@ -67,6 +67,8 @@ spec:
       - name: shared-volume
         persistentVolumeClaim:
             claimName: {{ .Release.Name }}-pvc
+        storageClass:
+          name: {{ .Values.storages.sc }}
       nodeSelector:
         homework: "true" 
         

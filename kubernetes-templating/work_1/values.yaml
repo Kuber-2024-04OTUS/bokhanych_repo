@@ -13,6 +13,7 @@ resources:
 storages:
   configmap_name1: nginx-conf
   configmap_name2: bokhanych-configmap
-
+  sc: yc-network-hdd
+  
 probes:
   readiness: true

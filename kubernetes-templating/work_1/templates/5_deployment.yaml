@@ -68,7 +68,7 @@ spec:
         storageClass:
           name: {{ .Values.storages.storage_class }}
         persistentVolumeClaim:
-          claimName: {{ .Values.storages.persistent_volume_claim }}
+          claimName: 
       nodeSelector:
-        homework: "true" 
+        node-role: {{ .Values.storages.nodeselector.node_role }}
         

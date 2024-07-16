@@ -21,7 +21,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: homework.otus
+    - host: homework.otus.helm
       http:
         paths:
           - path: /

@@ -11,4 +11,4 @@ spec:
     requests:
       storage: 1Gi
   storageClassName: "yc-network-hdd"
-  volumeName: yandex-cluster-persistent-volume
+  #volumeName: yandex-cluster-persistent-volume

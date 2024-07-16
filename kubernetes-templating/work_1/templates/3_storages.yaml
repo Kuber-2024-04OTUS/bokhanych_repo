@@ -1,23 +1,14 @@
-### UNCOMMENT FOR MINIKUBE ###
-
-# apiVersion: storage.k8s.io/v1
-# kind: StorageClass
-# metadata:
-#   name: {{ .Release.Name }}-storageclass
-#   namespace: {{ .Values.general.namespace }}
-# provisioner: k8s.io/minikube-hostpath
-# reclaimPolicy: Retain
-# volumeBindingMode: Immediate
-# ---
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: {{ .Release.Name }}-pvc
-#   namespace: {{ .Values.general.namespace }}
-# spec: 
-#   storageClassName: {{ .Values.storages.sc }}
-#   accessModes:
-#     - ReadWriteOnce
-#   resources:
-#     requests:
-#       storage: 1Gi
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: homeworkhelm
+  name: yandex-cluster-persistent-claim
+spec:
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: "yc-network-hdd"
+  volumeName: yandex-cluster-persistent-volume

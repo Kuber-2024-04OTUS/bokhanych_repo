@@ -13,6 +13,7 @@ metadata:
       }
     nginx.ingress.kubernetes.io/rewrite-target: /homepage
 spec:
+  ingressClassName: nginx
   rules:
     - host: homework.otus
       http:

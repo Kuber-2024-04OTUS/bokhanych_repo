@@ -19,6 +19,7 @@ metadata:
   namespace: {{ .Values.general.namespace }}
   annotations:
 spec:
+  ingressClassName: nginx
   rules:
     - host: homework.otus
       http:

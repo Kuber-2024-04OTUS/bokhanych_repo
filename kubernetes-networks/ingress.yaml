@@ -4,14 +4,14 @@ metadata:
   name: main-ingress
   namespace: homework
   annotations:
-    nginx.ingress.kubernetes.io/server-snippets: |     # разрешен доступ только с http://homework.otus/index.html, который редиректит на http://homework.otus/homepage (по заданию)
-      location ~* "^/index.html" {  
-        allow all;
-      }
-      location / {
-        deny all;
-      }
-    nginx.ingress.kubernetes.io/rewrite-target: /homepage
+    # nginx.ingress.kubernetes.io/server-snippets: |     # разрешен доступ только с http://homework.otus/index.html, который редиректит на http://homework.otus/homepage (по заданию)
+    #   location ~* "^/index.html" {  
+    #     allow all;
+    #   }
+    #   location / {
+    #     deny all;
+    #   }
+    # nginx.ingress.kubernetes.io/rewrite-target: /homepage
 spec:
   ingressClassName: nginx
   rules:

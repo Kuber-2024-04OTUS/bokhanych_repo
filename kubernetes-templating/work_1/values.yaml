@@ -13,7 +13,8 @@ resources:
 storages:
   configmap_name1: nginx-conf
   configmap_name2: bokhanych-configmap
-  sc: yc-network-hdd
+  storage_class: yc-network-hdd
+  persistent_volume_claim: yandex-cluster-persistent-claim
   
 probes:
   readiness: true

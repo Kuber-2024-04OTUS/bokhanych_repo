@@ -65,10 +65,10 @@ spec:
         configMap:
           name:  {{ .Values.storages.configmap_name2 }}
       - name: shared-volume
-        persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-pvc
         storageClass:
-          name: {{ .Values.storages.sc }}
+          name: {{ .Values.storages.storage_class }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.storages.persistent_volume_claim }}
       nodeSelector:
         homework: "true" 
         

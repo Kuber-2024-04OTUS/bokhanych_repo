@@ -9,18 +9,16 @@ spec:
   project: otus
   source:
     repoURL       : 'git@github.com:Kuber-2024-04OTUS/bokhanych_repo.git'
-    targetRevision: HEAD
+    targetRevision: kubernetes-templating
     path          : 'kubernetes-templating/work_1'
-    directory:
-      exclude: '3_storages.yaml'
     helm:
       valueFiles:
         - values.yaml
       parameters:
-      - name: general.namespace
+      - name : general.namespace
         value: homeworkhelm
-      - name: resources.replicaCount
-        value: '1'
+      - name : resources.replicaCount
+        value: '2'
   destination:
     name     : in-cluster
     namespace: homeworkhelm

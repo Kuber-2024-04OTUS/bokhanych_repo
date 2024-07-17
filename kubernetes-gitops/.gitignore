@@ -3,3 +3,4 @@ charts
 keys/
 templates/
 argo-cd/
+temp.json

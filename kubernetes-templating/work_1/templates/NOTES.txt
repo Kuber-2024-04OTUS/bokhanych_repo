@@ -1,4 +1,0 @@
-
-Service is UP.
-- URL: http://homework.otus
-- IP: 157.90.28.247

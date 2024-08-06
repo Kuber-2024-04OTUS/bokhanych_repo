@@ -131,10 +131,10 @@ sudo apt-mark hold kubelet
 
 ***Результат:***
 ```
-root@k8s-bokhanych-1:~# kubectl get nodes
-NAME              STATUS   ROLES           AGE     VERSION
-k8s-bokhanych-1   Ready    control-plane   4h14m   v1.30.3
-k8s-bokhanych-2   Ready    <none>          4h6m    v1.30.3
-k8s-bokhanych-3   Ready    <none>          4h5m    v1.30.3
-k8s-bokhanych-4   Ready    <none>          4h5m    v1.30.3
+root@k8s-bokhanych-1:~# kubectl get nodes -o wide
+NAME              STATUS   ROLES           AGE     VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE           KERNEL-VERSION     CONTAINER-RUNTIME
+k8s-bokhanych-1   Ready    control-plane   4h27m   v1.30.3   10.10.21.43   <none>        Ubuntu 24.04 LTS   6.8.0-39-generic   containerd://1.7.19
+k8s-bokhanych-2   Ready    <none>          4h19m   v1.30.3   10.10.21.40   <none>        Ubuntu 24.04 LTS   6.8.0-39-generic   containerd://1.7.19
+k8s-bokhanych-3   Ready    <none>          4h19m   v1.30.3   10.10.21.41   <none>        Ubuntu 24.04 LTS   6.8.0-39-generic   containerd://1.7.19
+k8s-bokhanych-4   Ready    <none>          4h19m   v1.30.3   10.10.21.45   <none>        Ubuntu 24.04 LTS   6.8.0-39-generic   containerd://1.7.19
 ```

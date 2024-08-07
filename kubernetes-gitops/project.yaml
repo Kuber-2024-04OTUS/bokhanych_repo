@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: otus
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: "otus project"
+  sourceRepos:
+  - 'git@github.com:Kuber-2024-04OTUS/bokhanych_repo.git'
+  destinations:
+  - namespace: 'homework'
+    server: https://kubernetes.default.svc
+  - namespace: 'homeworkhelm'
+    server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+  - group: ''
+    kind: Namespace
+  - group: 'storage.k8s.io'
+    kind: StorageClass
+  namespaceResourceWhitelist:
+  - group: "*"
+    kind: "*"
+  roles:
+  - name: "otus-app-admin"
+    description: "Otus team's deployment role"
+    policies:
+    - p, proj:otus:otus-app-admin, applications, *, otus/*, allow
+    groups:
+    - "Otus"
+  orphanedResources:
+    warn: true

@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name      : app-templating
+  namespace : argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: otus
+  source:
+    repoURL       : 'git@github.com:Kuber-2024-04OTUS/bokhanych_repo.git'
+    targetRevision: kubernetes-templating
+    path          : 'kubernetes-templating/work_1'
+    helm:
+      valueFiles:
+        - values.yaml
+      parameters:
+      - name : general.namespace
+        value: homeworkhelm
+      - name : resources.replicaCount
+        value: '2'
+  destination:
+    name     : in-cluster
+    namespace: homeworkhelm
+  sources: []
+  syncPolicy:
+    automated:
+      prune   : true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      

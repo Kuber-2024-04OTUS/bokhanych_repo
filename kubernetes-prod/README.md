@@ -138,3 +138,16 @@ k8s-bokhanych-2   Ready    <none>          4h19m   v1.30.3   10.10.21.40   <none
 k8s-bokhanych-3   Ready    <none>          4h19m   v1.30.3   10.10.21.41   <none>        Ubuntu 24.04 LTS   6.8.0-39-generic   containerd://1.7.19
 k8s-bokhanych-4   Ready    <none>          4h19m   v1.30.3   10.10.21.45   <none>        Ubuntu 24.04 LTS   6.8.0-39-generic   containerd://1.7.19
 ```
+
+
+***Задание со звездочкой:***
+Делал по этому мануалу: https://habr.com/ru/companies/domclick/articles/682364/#5
+```
+root@k8s-bokhanych-1:~# kubectl get nodes -o wide
+NAME    STATUS   ROLES           AGE     VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE           KERNEL-VERSION     CONTAINER-RUNTIME
+node1   Ready    control-plane   6m27s   v1.30.3   10.10.21.43   <none>        Ubuntu 24.04 LTS   6.8.0-39-generic   containerd://1.7.20
+node2   Ready    control-plane   5m55s   v1.30.3   10.10.21.40   <none>        Ubuntu 24.04 LTS   6.8.0-39-generic   containerd://1.7.20
+node3   Ready    control-plane   5m29s   v1.30.3   10.10.21.41   <none>        Ubuntu 24.04 LTS   6.8.0-39-generic   containerd://1.7.20
+node4   Ready    <none>          4m47s   v1.30.3   10.10.21.45   <none>        Ubuntu 24.04 LTS   6.8.0-39-generic   containerd://1.7.20
+node5   Ready    <none>          4m47s   v1.30.3   10.10.21.51   <none>        Ubuntu 24.04 LTS   6.8.0-39-generic   containerd://1.7.20
+```

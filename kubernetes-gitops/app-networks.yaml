@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name      : app-networks
+  namespace : argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: otus
+  source:
+    repoURL       : 'git@github.com:Kuber-2024-04OTUS/bokhanych_repo.git'
+    targetRevision: HEAD
+    path          : 'kubernetes-networks'
+  destination:
+    name     : in-cluster
+    namespace: homework
+  sources: []
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true

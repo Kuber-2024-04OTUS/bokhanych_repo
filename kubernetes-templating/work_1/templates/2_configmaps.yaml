@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.storages.configmap_name2 }}
+  namespace: {{ .Values.general.namespace }}
+data:
+  ping: "pong"
+  biba: "boba"
+  index.html: |
+    Welcome to bokhanych-configmap!
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.storages.configmap_name1 }}
+  namespace: {{ .Values.general.namespace }}
+data:
+  nginx.conf: |
+    server {
+        listen 8000;
+        root /homework;
+        autoindex on;
+    }
